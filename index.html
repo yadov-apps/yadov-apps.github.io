@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Иван Ядов</title>
+    <style>
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes highlight {
+            0% { background-color: rgba(52, 152, 219, 0); }
+            30% { background-color: rgba(52, 152, 219, 0.1); }
+            100% { background-color: rgba(52, 152, 219, 0); }
+        }
+        
+        /* Основные стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #2c3e50;
+        }
+        
+        /* Шапка сайта */
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10%;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #3498db;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        /* Мобильное меню */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+        }
+        
+        .mobile-menu-btn span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: #333;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-150%);
+            transition: transform 0.4s ease;
+            z-index: 999;
+        }
+        
+        .mobile-menu.active {
+            transform: translateY(0);
+        }
+        
+        .mobile-menu ul {
+            list-style: none;
+        }
+        
+        .mobile-menu li {
+            margin-bottom: 15px;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #333;
+            padding: 8px 0;
+            transition: color 0.3s ease;
+        }
+        
+        .mobile-menu a:hover {
+            color: #3498db;
+        }
+        
+        .nav-links li {
+            padding: 0 20px;
+        }
+        
+        .nav-links a {
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #3498db;
+        }
+        
+        /* Секция Hero */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #3498db, #8e44ad);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 30px;
+            animation: fadeIn 1.2s ease-out;
+        }
+        
+        .cta-button {
+            background-color: white;
+            color: #3498db;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            animation: fadeIn 1.4s ease-out, pulse 2s infinite 2s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            background-color: #f8f8f8;
+        }
+        
+        /* Секция О себе */
+        .about {
+            padding: 100px 10%;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 50px;
+            color: #2c3e50;
+        }
+        
+        .about-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            padding-right: 40px;
+            animation: slideInLeft 1s ease-out;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            background-color: #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: slideInRight 1s ease-out, float 4s ease-in-out infinite;
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Секция проектов */
+        .projects {
+            padding: 100px 10%;
+            background-color: #f9f9f9;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+            animation-delay: calc(var(--card-index) * 0.2s);
+            cursor: pointer;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .project-image {
+            height: 200px;
+            background-color: #eee;
+            overflow: hidden;
+        }
+        
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .project-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 200px); /* Высота за вычетом высоты изображения */
+        }
+        
+        .project-info h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .project-info p {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
+        .project-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+        
+        .project-link {
+            color: #3498db;
+            font-weight: 500;
+        }
+        
+        /* Секция навыков */
+        .skills {
+            padding: 100px 10%;
+            background-color: white;
+        }
+        
+        .skills-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .skill-category {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+            margin-right: 15px;
+            margin-left: 15px;
+	
+        }
+        
+        .skill-category h3 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .skill-item {
+            margin-bottom: 15px;
+        }
+        
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .skill-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #8e44ad);
+            border-radius: 5px;
+            width: 0;
+            transition: width 1.5s ease-in-out;
+        }
+        
+        .skill-visible .skill-progress {
+            animation: slideInLeft 1s forwards;
+        }
+        
+        /* Секция контактов */
+        .contact {
+            padding: 100px 10%;
+            background-color: #f9f9f9;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        textarea.form-control {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        .submit-button {
+            background: linear-gradient(90deg, #3498db, #8e44ad);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Подвал сайта */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 50px 10%;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .social-links {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            color: #2c3e50;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            margin-top: 20px;
+            color: #bdc3c7;
+        }
+        
+        /* Модальное окно для проектов */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 0;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: scale(0.8);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .modal-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background-color: white;
+            z-index: 10;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #2c3e50;
+        }
+        
+        .modal-close {
+            border: none;
+            background: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .project-detail-image {
+            width: 100%;
+            height: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .project-detail-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .project-detail-content h4 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .project-detail-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .tech-tag {
+            background-color: #edf2f7;
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: #4a5568;
+            font-weight: 500;
+        }
+        
+        .project-detail-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .gallery-item {
+            height: 150px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .project-detail-actions {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .detail-button {
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+        
+        .primary-button {
+            background: linear-gradient(90deg, #3498db, #8e44ad);
+            color: white;
+        }
+        
+        .secondary-button {
+            background-color: white;
+            color: #2c3e50;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .detail-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        body.modal-open {
+            overflow: hidden;
+        }
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 5%;
+            }
+            
+            .project-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .skills-container {
+                flex-wrap: wrap;
+            }
+            
+            .skill-category {
+                flex-basis: 45%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-text {
+                padding-right: 0;
+                margin-bottom: 30px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .skill-category {
+                flex-basis: 100%;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .contact-form {
+                padding: 0 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+                margin-bottom: 30px;
+            }
+            
+            .about, .projects, .skills, .contact {
+                padding: 70px 5%;
+            }
+            
+            .about-image {
+                height: 300px;
+            }
+            
+            .submit-button, .cta-button {
+                width: 100%;
+            }
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .status-badge.release {
+            background: linear-gradient(90deg, #22c55e, #16a34a);
+            box-shadow: 0 2px 10px rgba(34, 197, 94, 0.3);
+        }
+        
+        .status-badge.development {
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+            box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+        }
+        
+        .status-badge.testing {
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+            box-shadow: 0 2px 10px rgba(245, 158, 11, 0.3);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <nav>
+            <div class="logo">Портфолио</div>
+            <ul class="nav-links">
+                <li><a href="#about">О себе</a></li>
+                <li><a href="#projects">Проекты</a></li>
+                <li><a href="#skills">Навыки</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+        <div class="mobile-menu">
+            <ul>
+                <li><a href="#about">О себе</a></li>
+                <li><a href="#projects">Проекты</a></li>
+                <li><a href="#skills">Навыки</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Секция Hero -->
+    <section class="hero">
+        <h1>Иван Ядов</h1>
+        <p>Flutter-разработчик, создающий функциональные и интуитивно понятные мобильные приложения</p>
+        <a href="#contact" class="cta-button">Связаться со мной</a>
+    </section>
+
+    <!-- Секция О себе -->
+    <section id="about" class="about">
+        <h2 class="section-title">О себе</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Привет! Я Flutter-разработчик с опытом создания кроссплатформенных мобильных приложений. Я специализируюсь на разработке интуитивно понятных и функциональных приложений, которые помогают пользователям решать реальные задачи.</p>
+                <p>В настоящее время я учусь в Дальневосточном федеральном университете (ДВФУ). Помимо учебы, я увлекаюсь созданием личных проектов, которые позволяют мне экспериментировать с новыми технологиями и подходами.</p>
+                <p>Моя цель — создавать качественные приложения, которые не только отлично выглядят, но и помогают пользователям упростить их повседневные задачи.</p>
+                <p>Email: alpiernews@gmail.com</p>
+            </div>
+            <div class="about-image">
+                <img src="https://res.cloudinary.com/dw6swsfbk/image/upload/v1741250138/5359633459422816110-2_ugiwxa.jpg" alt="Моё фото">
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция проектов -->
+    <section id="projects" class="projects">
+        <h2 class="section-title">Мои проекты</h2>
+        <div class="project-grid">
+            <!-- Проект 1 -->
+            <div class="project-card" style="--card-index: 0" data-project="project1">
+                <div class="project-image">
+                    <img src="https://res.cloudinary.com/dw6swsfbk/image/upload/v1741250241/logo_u5yshi.webp" alt="IronBuddy">
+                </div>
+                <div class="project-info">
+                    <h3>IronBuddy</h3>
+                    <p>Мобильное приложение-дневник для тренажерного зала. Отслеживание тренировок, прогресса и планирование упражнений.</p>
+                    <div class="project-footer">
+                        <span class="status-badge release">Релиз</span>
+                        <a href="#" class="project-link">Подробнее →</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Проект 2 -->
+            <div class="project-card" style="--card-index: 1" data-project="project2">
+                <div class="project-image">
+                    <img src="https://res.cloudinary.com/dw6swsfbk/image/upload/v1741250295/1734529258622_zobdnx.png" alt="RoomieMatch">
+                </div>
+                <div class="project-info">
+                    <h3>RoomieMatch</h3>
+                    <p>Приложение для поиска сожителей и соседей по комнате. Умный подбор на основе предпочтений и образа жизни.</p>
+                    <div class="project-footer">
+                        <span class="status-badge development">Разработка</span>
+                        <a href="#" class="project-link">Подробнее →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Модальные окна для проектов -->
+    <div class="modal-overlay" id="projectModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Название проекта</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Содержимое модального окна будет загружено динамически -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Секция навыков -->
+    <section id="skills" class="skills">
+        <h2 class="section-title">Мои навыки</h2>
+        <div class="skills-container">
+            <!-- Mobile навыки -->
+            <div class="skill-category">
+                <h3>Мобильная разработка</h3>
+                
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Flutter</span>
+                        <span>55%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 55%;"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Dart</span>
+                        <span>40%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 40%;"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Firebase</span>
+                        <span>70%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 70%;"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Supabase</span>
+                        <span>30%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 30%;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Web навыки -->
+            <div class="skill-category">
+                <h3>Web-разработка</h3>
+                
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>HTML</span>
+                        <span>20%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 20%;"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>CSS</span>
+                        <span>15%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 15%;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Другие навыки -->
+            <div class="skill-category">
+                <h3>Другие навыки</h3>
+                
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Python</span>
+                        <span>30%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 30%;"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>UI/UX Design</span>
+                        <span>65%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 65%;"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Git</span>
+                        <span>45%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 45%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция контактов -->
+    <section id="contact" class="contact">
+        <h2 class="section-title">Связаться со мной</h2>
+        <div class="contact-form">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <p>Вы можете связаться со мной через Telegram:</p>
+                <a href="https://t.me/alpi3r" style="display: inline-block; margin-top: 10px; font-size: 1.1rem; color: #3498db; font-weight: 600;">@alpi3r</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал сайта -->
+    <footer>
+        <div class="footer-content">
+            <p>Иван Ядов | Flutter-разработчик</p>
+            <p class="copyright">© 2025 Все права защищены.</p>
+        </div>
+    </footer>
+    <script>
+        // Анимация при прокрутке
+        document.addEventListener('DOMContentLoaded', function() {
+            // Мобильное меню
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            
+            if (menuBtn) {
+                menuBtn.addEventListener('click', function() {
+                    menuBtn.classList.toggle('active');
+                    mobileMenu.classList.toggle('active');
+                });
+            }
+            
+            // Плавный скролл при клике на навигационные ссылки
+            const scrollLinks = document.querySelectorAll('.nav-links a, .mobile-menu a, .cta-button');
+            
+            scrollLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Предотвращаем стандартное поведение ссылки
+                    e.preventDefault();
+                    
+                    // Получаем целевую секцию из атрибута href
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        // Рассчитываем позицию для скролла (с учетом высоты шапки)
+                        const headerHeight = document.querySelector('header').offsetHeight;
+                        const targetPosition = targetSection.offsetTop - headerHeight;
+                        
+                        // Плавно скроллим к секции
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Добавляем эффект подсветки для секции при переходе
+                        targetSection.classList.add('section-highlight');
+                        setTimeout(() => {
+                            targetSection.classList.remove('section-highlight');
+                        }, 1000);
+                    }
+                    
+                    // Закрываем мобильное меню при клике
+                    if (mobileMenu && mobileMenu.classList.contains('active')) {
+                        mobileMenu.classList.remove('active');
+                        menuBtn.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Отслеживание текущей активной секции при скролле
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-links a, .mobile-menu a');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                const scrollPosition = window.scrollY + window.innerHeight / 3;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        current = '#' + section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+            
+            // Анимация появления элементов при прокрутке
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('skill-visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            // Наблюдение за навыками
+            document.querySelectorAll('.skill-item').forEach(item => {
+                observer.observe(item);
+            });
+            
+            // Установка ширины прогресс-баров
+            document.querySelectorAll('.skill-item').forEach(item => {
+                const percentText = item.querySelector('.skill-name span:last-child').textContent;
+                const percent = parseInt(percentText);
+                const progressBar = item.querySelector('.skill-progress');
+                progressBar.style.width = '0';
+                
+                setTimeout(() => {
+                    progressBar.style.width = percent + '%';
+                }, 300);
+            });
+            
+            // Добавляем индикатор прокрутки наверху страницы
+            const scrollIndicator = document.createElement('div');
+            scrollIndicator.className = 'scroll-progress';
+            document.body.appendChild(scrollIndicator);
+            
+            window.addEventListener('scroll', () => {
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrollPercent = (scrollTop / scrollHeight) * 100;
+                
+                scrollIndicator.style.width = scrollPercent + '%';
+            });
+            
+            // Обработка модальных окон проектов
+            const projectCards = document.querySelectorAll('.project-card');
+            const modal = document.querySelector('#projectModal');
+            const modalClose = document.querySelector('.modal-close');
+            const modalTitle = document.querySelector('#modalTitle');
+            const modalBody = document.querySelector('.modal-body');
+            
+            // Данные проектов
+            const projectsData = {
+    project1: {
+        title: "IronBuddy",
+        fullDescription: `
+            <div class="project-detail-image">
+                <img src="https://res.cloudinary.com/dw6swsfbk/image/upload/v1741250241/logo_u5yshi.webp" alt="IronBuddy">
+            </div>
+            <div class="project-detail-content">
+                <h4>О проекте</h4>
+                <p>IronBuddy — это мобильное приложение-дневник для тренажерного зала, которое помогает отслеживать тренировки, прогресс и планировать упражнения.</p>
+                <p>Приложение представляет собой комплексное решение для фитнес-энтузиастов, которые хотят систематизировать свои тренировки и отслеживать прогресс. Пользователи могут создавать и настраивать программы тренировок, устанавливать цели, вести дневник питания и получать аналитику по результатам.</p>
+                
+                
+                <h4>Использованные технологии</h4>
+                <div class="project-detail-tech">
+                    <span class="tech-tag">Flutter</span>
+                    <span class="tech-tag">Dart</span>
+                    <span class="tech-tag">Firebase</span>
+                    <span class="tech-tag">Cloud Firestore</span>
+                    <span class="tech-tag">Firebase Auth</span>
+                    <span class="tech-tag">fl_chart</span>
+                </div>
+                
+                
+                
+                <div class="project-detail-actions">
+                    <a href="https://www.rustore.ru/catalog/app/com.example.gym_app" class="detail-button primary-button">RuStore</a>
+                </div>
+            </div>
+        `
+    },
+    // <h4>Галерея проекта</h4>
+    //             <div class="project-detail-gallery">
+    //                 <div class="gallery-item">
+    //                     <img src="/api/placeholder/300/600" alt="Скриншот тренировки">
+    //                 </div>
+    //                 <div class="gallery-item">
+    //                     <img src="/api/placeholder/300/600" alt="Скриншот прогресса">
+    //                 </div>
+    //                 <div class="gallery-item">
+    //                     <img src="/api/placeholder/300/600" alt="Скриншот питания">
+    //                 </div>
+    //             </div>
+    // <a href="https://github.com/ivanyadov/ironbuddy" class="detail-button secondary-button">GitHub</a>
+    project2: {
+        title: "RoomieMatch",
+        fullDescription: `
+            <div class="project-detail-image">
+                <img src="https://res.cloudinary.com/dw6swsfbk/image/upload/v1741250295/1734529258622_zobdnx.png" alt="RoomieMatch">
+            </div>
+            <div class="project-detail-content">
+                <h4>О проекте</h4>
+                <p>RoomieMatch — это приложение для поиска сожителей и соседей по комнате с умным подбором на основе предпочтений и образа жизни.</p>
+                <p>Приложение представляет собой инновационное решение для студентов и молодых специалистов, которые ищут соседей по комнате или квартире. RoomieMatch анализирует информацию о предпочтениях, привычках и образе жизни пользователей и предлагает наиболее подходящие варианты. В приложении реализована система рейтингов и отзывов, а также встроенный мессенджер для общения.</p>
+                
+                
+                <h4>Использованные технологии</h4>
+                <div class="project-detail-tech">
+                    <span class="tech-tag">Flutter</span>
+                    <span class="tech-tag">Dart</span>
+                    <span class="tech-tag">Firebase</span>
+                    <span class="tech-tag">Cloud Firestore</span>
+                    <span class="tech-tag">Firebase Auth</span>
+                    <span class="tech-tag">Cloudinary API</span>
+                    <span class="tech-tag">Cloud Functions</span>
+                </div>
+                
+                <div class="project-detail-actions">
+                    <a href="https://t.me/ivanalpier" class="detail-button secondary-button">Demo</a>
+                </div>
+            </div>
+        `
+    },
+};
+            // Открытие модального окна при клике на проект
+            projectCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Предотвращаем переход по ссылке внутри карточки
+                    if (e.target.tagName === 'A') {
+                        e.preventDefault();
+                    }
+                    
+                    const projectId = this.getAttribute('data-project');
+                    const projectData = projectsData[projectId];
+                    
+                    if (projectData) {
+                        modalTitle.textContent = projectData.title;
+                        modalBody.innerHTML = projectData.fullDescription;
+                        
+                        // Открываем модальное окно
+                        modal.classList.add('active');
+                        document.body.classList.add('modal-open');
+                        
+                        // Анимация появления элементов внутри модального окна
+                        const elements = modalBody.querySelectorAll('h4, p, ul, .project-detail-tech, .project-detail-gallery, .project-detail-actions');
+                        elements.forEach((el, index) => {
+                            el.style.opacity = '0';
+                            el.style.transform = 'translateY(20px)';
+                            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                            el.style.transitionDelay = `${0.1 + (index * 0.1)}s`;
+                            
+                            setTimeout(() => {
+                                el.style.opacity = '1';
+                                el.style.transform = 'translateY(0)';
+                            }, 100);
+                        });
+                    }
+                });
+            });
+            
+            // Закрытие модального окна
+            modalClose.addEventListener('click', () => {
+                closeModal();
+            });
+            
+            // Закрытие при клике на оверлей
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Закрытие по нажатию Esc
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+            
+            function closeModal() {
+                modal.classList.remove('active');
+                document.body.classList.remove('modal-open');
+            }
+        });
+    </script>
+    
+    <style>
+        /* Индикатор прокрутки */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #8e44ad);
+            width: 0;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+</body>
+</html>
