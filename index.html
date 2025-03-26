@@ -3,1313 +3,1155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Иван Ядов</title>
+    <title>Плей-офф КХЛ 2025</title>
     <style>
-        /* Анимации */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        :root {
+            --bg-color: #0e1621;
+            --primary-color: #1c2a3a;
+            --secondary-color: #263850;
+            --accent-color: #e74c3c;
+            --accent-hover: #c0392b;
+            --text-color: #ecf0f1;
+            --border-color: #34495e;
+            --hover-color: #2980b9;
+            --connector-color: #ffffff;
+            --connector-width: 2px;
         }
         
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-        
-        @keyframes highlight {
-            0% { background-color: rgba(52, 152, 219, 0); }
-            30% { background-color: rgba(52, 152, 219, 0.1); }
-            100% { background-color: rgba(52, 152, 219, 0); }
-        }
-        
-        /* Основные стили */
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background-color: #f5f5f5;
-            color: #333;
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #131e2c 100%);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        header {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            padding: 25px 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/api/placeholder/1200/200') center/cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        header h1 {
+            position: relative;
+            z-index: 1;
+            margin: 0;
+            font-size: 2.5rem;
+            color: var(--text-color);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            text-align: center;
+            margin: 25px 0;
+            color: var(--text-color);
+            letter-spacing: 2px;
+            font-size: 1.8rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+        }
+        
+        .tournament-info {
+            background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
             line-height: 1.6;
         }
         
-        a {
-            text-decoration: none;
-            color: #2c3e50;
+        .tournament-info p {
+            margin: 10px 0;
+            font-size: 1.1rem;
         }
-        
-        /* Шапка сайта */
-        header {
-            background-color: #ffffff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-            animation: fadeIn 0.8s ease-out;
-        }
-        
-        nav {
+
+        .bracket-container {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 20px 10%;
+            position: relative;
+            padding: 20px 0;
+            margin-bottom: 30px;
         }
         
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #3498db;
-        }
-        
-        .nav-links {
+        .round {
             display: flex;
-            list-style: none;
+            flex-direction: column;
+            min-width: 240px;
+            margin: 0 30px;
+            position: relative;
+            z-index: 1;
         }
         
-        /* Мобильное меню */
-        .mobile-menu-btn {
-            display: none;
+        .round-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 25px;
+            padding: 12px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .round-title::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 30%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.1), transparent);
+            transform: skewX(-25deg);
+        }
+
+        /* Улучшенное позиционирование матчей */
+        #round1 {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #round2-matches, #semifinal-matches, #final-match {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 100%;
+        }
+
+        /* Распределение пространства для второго раунда */
+        #round2 {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        #round2 .match-container:nth-child(1) {
+            margin-top: 40px;
+        }
+        #round2 .match-container:nth-child(2) {
+            margin-top: 70px;
+        }
+        #round2 .match-container:nth-child(3) {
+            margin-top: 125px;
+        }
+        #round2 .match-container:nth-child(4) {
+            margin-top: 70px;
+        }
+
+        /* Специальные правила для полуфинала */
+        #semifinal {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #semifinal .match-container:nth-child(1) {
+            margin-top: 130px;
+        }
+        #semifinal .match-container:nth-child(2) {
+            margin-top: 200px;
+        }
+
+        /* Специальные правила для финала */
+        #final {
+            display: flex;
             flex-direction: column;
             justify-content: space-between;
-            width: 30px;
-            height: 21px;
+        }
+
+        #final-match {
+            margin-top: 240px; /* Центрирование относительно полуфиналов */
+            height: 30%;
+        }
+        #final .match-container:nth-child(1) {
+            margin-top: 200px;
+            margin-bottom: 600px;
+        }
+        
+        .match-container {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 120px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .team-card {
+            background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0;
+            margin: 5px 0;
             cursor: pointer;
+            transition: all 0.3s ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            height: 80px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
         
-        .mobile-menu-btn span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background-color: #333;
-            border-radius: 3px;
-            transition: all 0.3s ease;
+        .team-card:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            border-color: var(--hover-color);
         }
         
-        .mobile-menu {
-            position: fixed;
-            top: 70px;
+        .team-card.selected {
+            border-color: var(--accent-color);
+            background: linear-gradient(to right, rgba(231, 76, 60, 0.2), var(--primary-color));
+            box-shadow: 0 0 15px rgba(231, 76, 60, 0.5);
+            transform: translateY(-3px) scale(1.02);
+        }
+        
+        .team-card.selected::after {
+            content: '';
+            position: absolute;
+            top: 0;
             left: 0;
             width: 100%;
-            background-color: white;
-            padding: 20px;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-            transform: translateY(-150%);
-            transition: transform 0.4s ease;
-            z-index: 999;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(231, 76, 60, 0.1), transparent);
+            animation: shine 1.5s infinite;
         }
         
-        .mobile-menu.active {
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* Улучшенные стили для логотипов */
+        .team-logo {
+            width: 60px;
+            height: 60px;
+            min-width: 60px; /* Предотвращает сжатие */
+            background-color: white;
+            border-radius: 8px;
+            margin: 10px;
+            object-fit: contain;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+        }
+        
+        .team-info {
+            flex: 1;
+            padding: 0 10px;
+        }
+        
+        .team-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 3px;
+        }
+        
+        .team-seed {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-right: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Connectors */
+        .connectors {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .connector {
+            position: absolute;
+            background-color: var(--connector-color);
+        }
+        
+        .horizontal-connector {
+            height: var(--connector-width);
+        }
+        
+        .vertical-connector {
+            width: var(--connector-width);
+        }
+        
+        .champion-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .champion-container.show {
+            opacity: 1;
             transform: translateY(0);
         }
         
-        .mobile-menu ul {
-            list-style: none;
+        .champion-card {
+            background: linear-gradient(45deg, var(--accent-color), #d35400);
+            border: 3px solid gold;
+            border-radius: 12px;
+            padding: 25px 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.5);
+            position: relative;
+            overflow: hidden;
+            max-width: 600px;
+            width: 100%;
         }
         
-        .mobile-menu li {
+        .champion-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 30%, rgba(0, 0, 0, 0.2) 70%);
+        }
+        
+        .champion-title {
+            font-size: 1.6rem;
             margin-bottom: 15px;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            position: relative;
         }
         
-        .mobile-menu a {
-            display: block;
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: #333;
-            padding: 8px 0;
-            transition: color 0.3s ease;
+        .champion-name {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            position: relative;
+            letter-spacing: 1px;
         }
         
-        .mobile-menu a:hover {
-            color: #3498db;
-        }
-        
-        .nav-links li {
-            padding: 0 20px;
-        }
-        
-        .nav-links a {
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        
-        .nav-links a:hover {
-            color: #3498db;
-        }
-        
-        /* Секция Hero */
-        .hero {
-            height: 100vh;
-            background: linear-gradient(135deg, rgba(52, 152, 219, 0.8), rgba(142, 68, 173, 0.8)), 
-                        url('https://res.cloudinary.com/dw6swsfbk/image/upload/v1741348295/wmremove-transformed_u6shof.jpg'); /* Замени 'your-image.jpg' на путь к твоему изображению */
+        .champion-logo {
+            width: 120px;
+            height: 120px;
+            background-color: white;
+            border-radius: 8px;
+            margin: 15px auto;
+            object-fit: contain;
             background-size: cover;
             background-position: center;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            background-repeat: no-repeat;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 2px solid gold;
+        }
+
+        .conference-title {
+            font-size: 1.3rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
             text-align: center;
-            padding: 0 10%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
         }
         
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            animation: fadeIn 1s ease-out;
+        .conference-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-color);
         }
-        
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin-bottom: 30px;
-            animation: fadeIn 1.2s ease-out;
-        }
-        
-        .cta-button {
-            background-color: white;
-            color: #3498db;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-            animation: fadeIn 1.4s ease-out, pulse 2s infinite 2s;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            background-color: #f8f8f8;
-        }
-        
-        /* Секция О себе */
-        .about {
-            padding: 100px 10%;
-            background-color: white;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2.2rem;
+
+        .west-conference, .east-conference {
             margin-bottom: 50px;
-            color: #2c3e50;
+            position: relative;
         }
-        
-        .about-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
+
+        #semifinal .round-title {
+            background: linear-gradient(to right, var(--accent-color), var(--accent-hover));
+            color: var(--bg-color);
         }
-        
-        .about-text {
-            flex: 1;
-            min-width: 300px;
-            padding-right: 40px;
-            animation: slideInLeft 1s ease-out;
+
+        #final .round-title {
+            background: linear-gradient(to right, gold, #f39c12);
+            color: var(--bg-color);
         }
-        
-        .about-image {
-            flex: 1;
-            min-width: 300px;
-            height: 400px;
-            background-color: #eee;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            animation: slideInRight 1s ease-out, float 4s ease-in-out infinite;
-        }
-        
-        .about-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        /* Секция проектов */
-        .projects {
-            padding: 100px 10%;
-            background-color: #f9f9f9;
-        }
-        
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .project-card {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.5s ease, box-shadow 0.5s ease;
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out forwards;
-            animation-delay: calc(var(--card-index) * 0.2s);
-            cursor: pointer;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-10px) scale(1.03);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-        }
-        
-        .project-image {
-            height: 200px;
-            background-color: #eee;
-            overflow: hidden;
-        }
-        
-        .project-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .project-info {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            height: calc(100% - 200px); /* Высота за вычетом высоты изображения */
-        }
-        
-        .project-info h3 {
-            margin-bottom: 10px;
-            color: #2c3e50;
-        }
-        
-        .project-info p {
-            color: #7f8c8d;
-            margin-bottom: 15px;
-            flex-grow: 1;
-        }
-        
-        .project-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: auto;
-        }
-        
-        .project-link {
-            color: #3498db;
-            font-weight: 500;
-        }
-        
-        /* Секция навыков */
-        .skills {
-            padding: 100px 10%;
-            background-color: white;
-        }
-        
-        .skills-container {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-        
-        .skill-category {
-            flex: 1;
-            min-width: 250px;
-            margin-bottom: 30px;
-            margin-right: 15px;
-            margin-left: 15px;
-	
-        }
-        
-        .skill-category h3 {
-            margin-bottom: 20px;
-            color: #2c3e50;
-        }
-        
-        .skill-item {
-            margin-bottom: 15px;
-        }
-        
-        .skill-name {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-        }
-        
-        .skill-bar {
-            height: 10px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        
-        .skill-progress {
-            height: 100%;
-            background: linear-gradient(90deg, #3498db, #8e44ad);
-            border-radius: 5px;
-            width: 0;
-            transition: width 1.5s ease-in-out;
-        }
-        
-        .skill-visible .skill-progress {
-            animation: slideInLeft 1s forwards;
-        }
-        
-        /* Секция контактов */
-        .contact {
-            padding: 100px 10%;
-            background-color: #f9f9f9;
-        }
-        
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
+
+        .reset-btn {
             display: block;
-            margin-bottom: 5px;
-            color: #2c3e50;
-            font-weight: 500;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-        
-        .form-control:focus {
-            outline: none;
-            border-color: #3498db;
-        }
-        
-        textarea.form-control {
-            resize: vertical;
-            min-height: 150px;
-        }
-        
-        .submit-button {
-            background: linear-gradient(90deg, #3498db, #8e44ad);
+            margin: 30px auto;
+            padding: 12px 25px;
+            background: linear-gradient(to right, var(--accent-color), var(--accent-hover));
             color: white;
             border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
+            border-radius: 8px;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
         }
-        
-        .submit-button:hover {
+
+        .reset-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
         }
         
-        /* Подвал сайта */
+        .reset-btn:active {
+            transform: translateY(1px);
+        }
+
         footer {
-            background-color: #2c3e50;
-            color: white;
-            padding: 50px 10%;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
             text-align: center;
+            padding: 20px 0;
+            margin-top: 30px;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+            position: relative;
         }
-        
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .social-links {
-            display: flex;
-            margin-bottom: 20px;
-        }
-        
-        .social-icon {
-            width: 40px;
-            height: 40px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 10px;
-            color: #2c3e50;
-            transition: transform 0.3s ease;
-        }
-        
-        .social-icon:hover {
-            transform: translateY(-5px);
-        }
-        
-        .copyright {
-            margin-top: 20px;
-            color: #bdc3c7;
-        }
-        
-        /* Модальное окно для проектов */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
-        
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .modal-content {
-            background-color: white;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 900px;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 0;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            transform: scale(0.8);
-            opacity: 0;
-            transition: transform 0.5s ease, opacity 0.5s ease;
-        }
-        
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
-            opacity: 1;
-        }
-        
-        .modal-header {
-            padding: 20px 30px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            background-color: white;
-            z-index: 10;
-            border-radius: 10px 10px 0 0;
-        }
-        
-        .modal-header h3 {
+
+        footer p {
             margin: 0;
-            font-size: 1.5rem;
-            color: #2c3e50;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            opacity: 0.8;
         }
-        
-        .modal-close {
-            border: none;
-            background: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s ease;
-        }
-        
-        .modal-close:hover {
-            background-color: #f1f1f1;
-        }
-        
-        .modal-body {
-            padding: 30px;
-        }
-        
-        .project-detail-image {
-            width: 100%;
-            height: 300px;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 30px;
-        }
-        
-        .project-detail-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .project-detail-content h4 {
-            margin-top: 0;
-            margin-bottom: 15px;
-            color: #2c3e50;
-        }
-        
-        .project-detail-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 20px 0;
-        }
-        
-        .tech-tag {
-            background-color: #edf2f7;
-            padding: 6px 12px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            color: #4a5568;
-            font-weight: 500;
-        }
-        
-        .project-detail-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 30px;
-        }
-        
-        .gallery-item {
-            height: 150px;
-            border-radius: 8px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        
-        .gallery-item:hover {
-            transform: translateY(-5px);
-        }
-        
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .project-detail-actions {
-            margin-top: 30px;
-            display: flex;
-            gap: 15px;
-        }
-        
-        .detail-button {
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-align: center;
-        }
-        
-        .primary-button {
-            background: linear-gradient(90deg, #3498db, #8e44ad);
-            color: white;
-        }
-        
-        .secondary-button {
-            background-color: white;
-            color: #2c3e50;
-            border: 1px solid #e2e8f0;
-        }
-        
-        .detail-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        body.modal-open {
-            overflow: hidden;
-        }
-        @media (max-width: 1024px) {
-            .container {
-                padding: 0 5%;
-            }
-            
-            .project-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .skills-container {
-                flex-wrap: wrap;
-            }
-            
-            .skill-category {
-                flex-basis: 45%;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .about-content {
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .bracket-container {
                 flex-direction: column;
+                align-items: center;
             }
             
-            .about-text {
-                padding-right: 0;
-                margin-bottom: 30px;
+            .round {
+                width: 90%;
+                margin-bottom: 40px;
+                min-width: auto;
             }
             
-            .nav-links {
+            /* Сбрасываем специальные позиционирования в мобильном виде */
+            #round2 .match-container,
+            #semifinal .match-container {
+                margin-top: 0;
+            }
+            
+            #final-match {
+                margin-top: 0;
+            }
+            
+            .connectors {
                 display: none;
             }
-            
-            .mobile-menu-btn {
-                display: flex;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .project-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .skill-category {
-                flex-basis: 100%;
-            }
-            
-            .section-title {
-                font-size: 1.8rem;
-            }
-            
-            .contact-form {
-                padding: 0 10px;
-            }
         }
-        
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .section-title {
-                font-size: 1.5rem;
-                margin-bottom: 30px;
-            }
-            
-            .about, .projects, .skills, .contact {
-                padding: 70px 5%;
-            }
-            
-            .about-image {
-                height: 300px;
-            }
-            
-            .submit-button, .cta-button {
-                width: 100%;
-            }
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: white;
-        }
-        
-        .status-badge.release {
-            background: linear-gradient(90deg, #22c55e, #16a34a);
-            box-shadow: 0 2px 10px rgba(34, 197, 94, 0.3);
-        }
-        
-        .status-badge.development {
-            background: linear-gradient(90deg, #3b82f6, #2563eb);
-            box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
-        }
-        
-        .status-badge.testing {
-            background: linear-gradient(90deg, #f59e0b, #d97706);
-            box-shadow: 0 2px 10px rgba(245, 158, 11, 0.3);
-        }
-
     </style>
 </head>
 <body>
-    <!-- Шапка сайта -->
     <header>
-        <nav>
-            <div class="logo">Портфолио</div>
-            <ul class="nav-links">
-                <li><a href="#about">О себе</a></li>
-                <li><a href="#projects">Проекты</a></li>
-                <li><a href="#skills">Навыки</a></li>
-                <li><a href="#contact">Контакты</a></li>
-            </ul>
-            <div class="mobile-menu-btn">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </nav>
-        <div class="mobile-menu">
-            <ul>
-                <li><a href="#about">О себе</a></li>
-                <li><a href="#projects">Проекты</a></li>
-                <li><a href="#skills">Навыки</a></li>
-                <li><a href="#contact">Контакты</a></li>
-            </ul>
-        </div>
+        <h1>Плей-офф КХЛ 2025</h1>
     </header>
-
-    <!-- Секция Hero -->
-    <section class="hero">
-        <h1>Иван Ядов</h1>
-        <p>Flutter-разработчик, создающий функциональные и интуитивно понятные мобильные приложения</p>
-        <a href="#contact" class="cta-button">Связаться со мной</a>
-    </section>
-
-    <!-- Секция О себе -->
-    <section id="about" class="about">
-        <h2 class="section-title">О себе</h2>
-        <div class="about-content">
-            <div class="about-text">
-                <p>Привет! Я Flutter-разработчик с опытом создания кроссплатформенных мобильных приложений. Я специализируюсь на разработке интуитивно понятных и функциональных приложений, которые помогают пользователям решать реальные задачи.</p>
-                <p>В настоящее время я учусь в Дальневосточном федеральном университете (ДВФУ). Помимо учебы, я увлекаюсь созданием личных проектов, которые позволяют мне экспериментировать с новыми технологиями и подходами.</p>
-                <p>Моя цель — создавать качественные приложения, которые не только отлично выглядят, но и помогают пользователям упростить их повседневные задачи.</p>
-                <p>Email: alpiernews@gmail.com</p>
-            </div>
-            <div class="about-image">
-                <img src="https://res.cloudinary.com/dw6swsfbk/image/upload/v1741250138/5359633459422816110-2_ugiwxa.jpg" alt="Моё фото">
-            </div>
+    
+    <div class="container">
+        <div class="tournament-info">
+            <p>Интерактивный браузер плей-офф КХЛ. Выберите победителей матчей нажатием на команду, чтобы увидеть, как будет развиваться турнирная сетка.</p>
+            <p>В первом раунде команды своих конференций играют между собой (1-8, 2-7, 3-6, 4-5). Во втором раунде команды играют с противоположной конференцией, где высшее место запада играет с низшим местом востока.</p>
         </div>
-    </section>
-
-    <!-- Секция проектов -->
-    <section id="projects" class="projects">
-        <h2 class="section-title">Мои проекты</h2>
-        <div class="project-grid">
-            <!-- Проект 1 -->
-            <div class="project-card" style="--card-index: 0" data-project="project1">
-                <div class="project-image">
-                    <img src="https://res.cloudinary.com/dw6swsfbk/image/upload/v1741344830/logo_1_kjymff.jpg" alt="IronBuddy">
+        
+        <h2>Сетка плей-офф КХЛ 2025</h2>
+        
+        <div class="bracket-container" id="bracket-container">
+            <div class="connectors" id="connectors"></div>
+            
+            <div class="round" id="round1">
+                <div class="round-title">Первый раунд</div>
+                
+                <div class="west-conference">
+                    <div class="conference-title">Западная конференция</div>
+                    
+                    <div class="match-container" id="west-match1">
+                        <div class="team-card" data-team="Локомотив" data-seed="1" data-conference="west" data-logo="https://img.championat.com/team/logo/14672244642043297304.pnghttps://img.championat.com/team/logo/14672244642043297304.png" onclick="selectWinner(this)">
+                            <div class="team-logo" style="background-image: url('https://img.championat.com/team/logo/14672244642043297304.png')"></div>
+                            <div class="team-info">
+                                <div class="team-name">Локомотив</div>
+                            </div>
+                            <div class="team-seed">1</div>
+                        </div>
+                        <div class="team-card" data-team="Торпедо" data-seed="8" data-conference="west" data-logo="https://img.championat.com/team/logo/16595213011902504395.png" onclick="selectWinner(this)">
+                            <div class="team-logo" style="background-image: url('https://img.championat.com/team/logo/16595213011902504395.png')"></div>
+                            <div class="team-info">
+                                <div class="team-name">Торпедо</div>
+                            </div>
+                            <div class="team-seed">8</div>
+                        </div>
+                    </div>
+                    
+                    <div class="match-container" id="west-match2">
+                        <div class="team-card" data-team="Динамо Минск" data-seed="4" data-conference="west" data-logo="https://img.championat.com/team/logo/1599168923970583304.png" onclick="selectWinner(this)">
+                            <div class="team-logo" style="background-image: url('https://img.championat.com/team/logo/1599168923970583304.png')"></div>
+                            <div class="team-info">
+                                <div class="team-name">Динамо Минск</div>
+                            </div>
+                            <div class="team-seed">4</div>
+                        </div>
+                        <div class="team-card" data-team="ЦСКА" data-seed="5" data-conference="west" data-logo="https://img.championat.com/team/logo/1521881177909853135.png" onclick="selectWinner(this)">
+                            <div class="team-logo" style="background-image: url('https://img.championat.com/team/logo/1521881177909853135.png')"></div>
+                            <div class="team-info">
+                                <div class="team-name">ЦСКА</div>
+                            </div>
+                            <div class="team-seed">5</div>
+                        </div>
+                    </div>
+                    
+                    <div class="match-container" id="west-match3">
+                        <div class="team-card" data-team="Динамо Москва" data-seed="2" data-conference="west" data-logo="https://img.championat.com/team/logo/16012025222113898731.png" onclick="selectWinner(this)">
+                            <div class="team-logo" style="background-image: url('https://img.championat.com/team/logo/16012025222113898731.png')"></div>
+                            <div class="team-info">
+                                <div class="team-name">Динамо Москва</div>
+                            </div>
+                            <div class="team-seed">2</div>
+                        </div>
+                        <div class="team-card" data-team="СКА" data-seed="7" data-conference="west" data-logo="https://img.championat.com/team/logo/14873435512073686720.png" onclick="selectWinner(this)">
+                            <div class="team-logo" style="background-image: url('https://img.championat.com/team/logo/14873435512073686720.png')"></div>
+                            <div class="team-info">
+                                <div class="team-name">СКА</div>
+                            </div>
+                            <div class="team-seed">7</div>
+                        </div>
+                    </div>
+                    
+                    <div class="match-container" id="west-match4">
+                        <div class="team-card" data-team="Спартак" data-seed="3" data-conference="west" data-logo="https://img.championat.com/team/logo/14751955781691057475.png" onclick="selectWinner(this)">
+                            <div class="team-logo" style="background-image: url('https://img.championat.com/team/logo/14751955781691057475.png')"></div>
+                            <div class="team-info">
+                                <div class="team-name">Спартак</div>
+                            </div>
+                            <div class="team-seed">3</div>
+                        </div>
+                        <div class="team-card" data-team="Северсталь" data-seed="6" data-conference="west" data-logo="https://img.championat.com/team/logo/1567605618721285972.png" onclick="selectWinner(this)">
+                            <div class="team-logo" style="background-image: url('https://img.championat.com/team/logo/1567605618721285972.png')"></div>
+                            <div class="team-info">
+                                <div class="team-name">Северсталь</div>
+                            </div>
+                            <div class="team-seed">6</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="project-info">
-                    <h3>IronBuddy</h3>
-                    <p>Мобильное приложение-дневник для тренажерного зала. Отслеживание тренировок, прогресса и планирование упражнений.</p>
-                    <div class="project-footer">
-                        <span class="status-badge release">Релиз</span>
-                        <a href="#" class="project-link">Подробнее →</a>
+                
+                <div class="east-conference">
+                    <div class="conference-title">Восточная конференция</div>
+                    
+                    <div class="match-container" id="east-match1">
+                        <div class="team-card" data-team="Трактор" data-seed="1" data-conference="east" data-logo="https://img.championat.com/team/logo/1599168674938052532.png" onclick="selectWinner(this)">
+                            <div class="team-logo" style="background-image: url('https://img.championat.com/team/logo/1599168674938052532.png')"></div>
+                            <div class="team-info">
+                                <div class="team-name">Трактор</div>
+                            </div>
+                            <div class="team-seed">1</div>
+                        </div>
+                        <div class="team-card" data-team="Адмирал" data-seed="8" data-conference="east" data-logo="https://img.championat.com/team/logo/16286243751094737454.png" onclick="selectWinner(this)">
+                            <div class="team-logo" style="background-image: url('https://img.championat.com/team/logo/16286243751094737454.png')"></div>
+                            <div class="team-info">
+                                <div class="team-name">Адмирал</div>
+                            </div>
+                            <div class="team-seed">8</div>
+                        </div>
+                    </div>
+                    
+                    <div class="match-container" id="east-match2">
+                        <div class="team-card" data-team="Ак Барс" data-seed="4" data-conference="east" data-logo="https://img.championat.com/team/logo/1659212829479270640.png" onclick="selectWinner(this)">
+                            <div class="team-logo" style="background-image: url('https://img.championat.com/team/logo/1659212829479270640.png')"></div>
+                            <div class="team-info">
+                                <div class="team-name">Ак Барс</div>
+                            </div>
+                            <div class="team-seed">4</div>
+                        </div>
+                        <div class="team-card" data-team="Автомобилист" data-seed="5" data-conference="east" data-logo="https://img.championat.com/team/logo/1467223858948139818.png" onclick="selectWinner(this)">
+                            <div class="team-logo" style="background-image: url('https://img.championat.com/team/logo/1467223858948139818.png')"></div>
+                            <div class="team-info">
+                                <div class="team-name">Автомобилист</div>
+                            </div>
+                            <div class="team-seed">5</div>
+                        </div>
+                    </div>
+                    
+                    <div class="match-container" id="east-match3">
+                        <div class="team-card" data-team="Салават Юлаев" data-seed="2" data-conference="east" data-logo="https://img.championat.com/team/logo/15991690491391188139.png" onclick="selectWinner(this)">
+                            <div class="team-logo" style="background-image: url('https://img.championat.com/team/logo/15991690491391188139.png')"></div>
+                            <div class="team-info">
+                                <div class="team-name">Салават Юлаев</div>
+                            </div>
+                            <div class="team-seed">2</div>
+                        </div>
+                        <div class="team-card" data-team="Сибирь" data-seed="7" data-conference="east" data-logo="https://img.championat.com/team/logo/15355414511422027013.png" onclick="selectWinner(this)">
+                            <div class="team-logo" style="background-image: url('https://img.championat.com/team/logo/15355414511422027013.png')"></div>
+                            <div class="team-info">
+                                <div class="team-name">Сибирь</div>
+                            </div>
+                            <div class="team-seed">7</div>
+                        </div>
+                    </div>
+                    
+                    <div class="match-container" id="east-match4">
+                        <div class="team-card" data-team="Металлург Мг" data-seed="3" data-conference="east" data-logo="https://img.championat.com/team/logo/14873432861635035570.png" onclick="selectWinner(this)">
+                            <div class="team-logo" style="background-image: url('https://img.championat.com/team/logo/14873432861635035570.png')"></div>
+                            <div class="team-info">
+                                <div class="team-name">Металлург Мг</div>
+                            </div>
+                            <div class="team-seed">3</div>
+                        </div>
+                        <div class="team-card" data-team="Авангард" data-seed="6" data-conference="east" data-logo="https://img.championat.com/team/logo/15359727361725323564.png" onclick="selectWinner(this)">
+                            <div class="team-logo" style="background-image: url('https://img.championat.com/team/logo/15359727361725323564.png')"></div>
+                            <div class="team-info">
+                                <div class="team-name">Авангард</div>
+                            </div>
+                            <div class="team-seed">6</div>
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Проект 2 -->
-            <div class="project-card" style="--card-index: 1" data-project="project2">
-                <div class="project-image">
-                    <img src="https://res.cloudinary.com/dw6swsfbk/image/upload/v1741344830/icon_axqoth.jpg" alt="RoomieMatch">
-                </div>
-                <div class="project-info">
-                    <h3>RoomieMatch</h3>
-                    <p>Приложение для поиска сожителей и соседей по комнате. Умный подбор на основе предпочтений и образа жизни.</p>
-                    <div class="project-footer">
-                        <span class="status-badge testing">Тестирование</span>
-                        <a href="#" class="project-link">Подробнее →</a>
-                    </div>
-                </div>
+            <div class="round" id="round2">
+                <div class="round-title">Второй раунд</div>
+                <div id="round2-matches"></div>
             </div>
-            <!-- Проект 3 -->
-            <div class="project-card" style="--card-index: 2" data-project="project3">
-                <div class="project-image">
-                    <img src="https://res.cloudinary.com/dw6swsfbk/image/upload/v1741347317/DALL_E_2025-03-07_21.30.25_-_A_minimalist_logo_for_a_cryptocurrency_wallet_app._The_design_should_be_clean_and_modern_featuring_an_abstract_geometric_symbol_that_represents_digit_2_pc7lqt.jpg" alt="Bitok">
-                </div>
-                <div class="project-info">
-                    <h3>Bitok</h3>
-                    <p>Современный и безопасный криптовалютный кошелек, разработанный для удобного хранения, обмена и управления цифровыми активами.</p>
-                    <div class="project-footer">
-                        <span class="status-badge development">Разработка</span>
-                        <a href="#" class="project-link">Подробнее →</a>
-                    </div>
+            
+            <div class="round" id="semifinal">
+                <div class="round-title">Полуфинал</div>
+                <div id="semifinal-matches"></div>
+            </div>
+            
+            <div class="round" id="final">
+                <div class="round-title">Финал</div>
+                <div id="final-match"></div>
+                
+                <!-- Добавляем изображение кубка -->
+                <div style="text-align: center; margin-top: 30px;">
+                    <img src="https://img.championat.com/tournir/17370121091679617527.png" alt="Кубок Гагарина" style="max-height: 180px; filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));">
                 </div>
             </div>
         </div>
-    </section>
-    
-    <!-- Модальные окна для проектов -->
-    <div class="modal-overlay" id="projectModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle">Название проекта</h3>
-                <button class="modal-close">&times;</button>
-            </div>
-            <div class="modal-body">
-                <!-- Содержимое модального окна будет загружено динамически -->
+        
+        <div class="champion-container" id="champion-container">
+            <div class="champion-card">
+                <div class="champion-title">Чемпион КХЛ 2025</div>
+                <div class="champion-logo" id="champion-logo" style="background-image: url('/api/placeholder/120/120')"></div>
+                <div class="champion-name" id="champion-name">Ожидание...</div>
             </div>
         </div>
+        
+        <button class="reset-btn" onclick="resetBracket()">Сбросить все выборы</button>
     </div>
-
-    <!-- Секция навыков -->
-    <section id="skills" class="skills">
-        <h2 class="section-title">Мои навыки</h2>
-        <div class="skills-container">
-            <!-- Mobile навыки -->
-            <div class="skill-category">
-                <h3>Мобильная разработка</h3>
-                
-                <div class="skill-item">
-                    <div class="skill-name">
-                        <span>Flutter</span>
-                        <span>55%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 55%;"></div>
-                    </div>
-                </div>
-                
-                <div class="skill-item">
-                    <div class="skill-name">
-                        <span>Dart</span>
-                        <span>40%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 40%;"></div>
-                    </div>
-                </div>
-                
-                <div class="skill-item">
-                    <div class="skill-name">
-                        <span>Firebase</span>
-                        <span>70%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 70%;"></div>
-                    </div>
-                </div>
-                
-                <div class="skill-item">
-                    <div class="skill-name">
-                        <span>Supabase</span>
-                        <span>30%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 30%;"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Web навыки -->
-            <div class="skill-category">
-                <h3>Web-разработка</h3>
-                
-                <div class="skill-item">
-                    <div class="skill-name">
-                        <span>HTML</span>
-                        <span>20%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 20%;"></div>
-                    </div>
-                </div>
-                
-                <div class="skill-item">
-                    <div class="skill-name">
-                        <span>CSS</span>
-                        <span>15%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 15%;"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Другие навыки -->
-            <div class="skill-category">
-                <h3>Другие навыки</h3>
-                
-                <div class="skill-item">
-                    <div class="skill-name">
-                        <span>Python</span>
-                        <span>30%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 30%;"></div>
-                    </div>
-                </div>
-                
-                <div class="skill-item">
-                    <div class="skill-name">
-                        <span>UI/UX Design</span>
-                        <span>65%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 65%;"></div>
-                    </div>
-                </div>
-                
-                <div class="skill-item">
-                    <div class="skill-name">
-                        <span>Git</span>
-                        <span>45%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 45%;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Секция контактов -->
-    <section id="contact" class="contact">
-        <h2 class="section-title">Связаться со мной</h2>
-        <div class="contact-form">
-            <div style="text-align: center; margin-bottom: 30px;">
-                <p>Вы можете связаться со мной через Telegram:</p>
-                <a href="https://t.me/alpi3r" style="display: inline-block; margin-top: 10px; font-size: 1.1rem; color: #3498db; font-weight: 600;">@alpi3r</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Подвал сайта -->
-    <footer>
-        <div class="footer-content">
-            <p>Иван Ядов | Flutter-разработчик</p>
-            <p class="copyright">© 2025 Все права защищены.</p>
-        </div>
-    </footer>
-    <script>
-        // Анимация при прокрутке
-        document.addEventListener('DOMContentLoaded', function() {
-            // Мобильное меню
-            const menuBtn = document.querySelector('.mobile-menu-btn');
-            const mobileMenu = document.querySelector('.mobile-menu');
-            
-            if (menuBtn) {
-                menuBtn.addEventListener('click', function() {
-                    menuBtn.classList.toggle('active');
-                    mobileMenu.classList.toggle('active');
-                });
-            }
-            
-            // Плавный скролл при клике на навигационные ссылки
-            const scrollLinks = document.querySelectorAll('.nav-links a, .mobile-menu a, .cta-button');
-            
-            scrollLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    // Предотвращаем стандартное поведение ссылки
-                    e.preventDefault();
-                    
-                    // Получаем целевую секцию из атрибута href
-                    const targetId = this.getAttribute('href');
-                    const targetSection = document.querySelector(targetId);
-                    
-                    if (targetSection) {
-                        // Рассчитываем позицию для скролла (с учетом высоты шапки)
-                        const headerHeight = document.querySelector('header').offsetHeight;
-                        const targetPosition = targetSection.offsetTop - headerHeight;
-                        
-                        // Плавно скроллим к секции
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                        
-                        // Добавляем эффект подсветки для секции при переходе
-                        targetSection.classList.add('section-highlight');
-                        setTimeout(() => {
-                            targetSection.classList.remove('section-highlight');
-                        }, 1000);
-                    }
-                    
-                    // Закрываем мобильное меню при клике
-                    if (mobileMenu && mobileMenu.classList.contains('active')) {
-                        mobileMenu.classList.remove('active');
-                        menuBtn.classList.remove('active');
-                    }
-                });
-            });
-            
-            // Отслеживание текущей активной секции при скролле
-            const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('.nav-links a, .mobile-menu a');
-            
-            window.addEventListener('scroll', () => {
-                let current = '';
-                const scrollPosition = window.scrollY + window.innerHeight / 3;
-                
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.offsetHeight;
-                    
-                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                        current = '#' + section.getAttribute('id');
-                    }
-                });
-                
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === current) {
-                        link.classList.add('active');
-                    }
-                });
-            });
-            
-            // Анимация появления элементов при прокрутке
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('skill-visible');
-                    }
-                });
-            }, {
-                threshold: 0.1
-            });
-            
-            // Наблюдение за навыками
-            document.querySelectorAll('.skill-item').forEach(item => {
-                observer.observe(item);
-            });
-            
-            // Установка ширины прогресс-баров
-            document.querySelectorAll('.skill-item').forEach(item => {
-                const percentText = item.querySelector('.skill-name span:last-child').textContent;
-                const percent = parseInt(percentText);
-                const progressBar = item.querySelector('.skill-progress');
-                progressBar.style.width = '0';
-                
-                setTimeout(() => {
-                    progressBar.style.width = percent + '%';
-                }, 300);
-            });
-            
-            // Добавляем индикатор прокрутки наверху страницы
-            const scrollIndicator = document.createElement('div');
-            scrollIndicator.className = 'scroll-progress';
-            document.body.appendChild(scrollIndicator);
-            
-            window.addEventListener('scroll', () => {
-                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrollPercent = (scrollTop / scrollHeight) * 100;
-                
-                scrollIndicator.style.width = scrollPercent + '%';
-            });
-            
-            // Обработка модальных окон проектов
-            const projectCards = document.querySelectorAll('.project-card');
-            const modal = document.querySelector('#projectModal');
-            const modalClose = document.querySelector('.modal-close');
-            const modalTitle = document.querySelector('#modalTitle');
-            const modalBody = document.querySelector('.modal-body');
-            
-            // Данные проектов
-            const projectsData = {
-    project1: {
-        title: "IronBuddy",
-        fullDescription: `
-            <div class="project-detail-image">
-                <img src="https://res.cloudinary.com/dw6swsfbk/image/upload/v1741345218/logo_1_1_k3eue6.jpg" alt="IronBuddy">
-            </div>
-            <div class="project-detail-content">
-                <h4>О проекте</h4>
-                <p>IronBuddy — это мобильное приложение-дневник для тренажерного зала, которое помогает отслеживать тренировки, прогресс и планировать упражнения.</p>
-                <p>Приложение представляет собой комплексное решение для фитнес-энтузиастов, которые хотят систематизировать свои тренировки и отслеживать прогресс. Пользователи могут создавать и настраивать программы тренировок, устанавливать цели, вести дневник питания и получать аналитику по результатам.</p>
-                
-                
-                <h4>Использованные технологии</h4>
-                <div class="project-detail-tech">
-                    <span class="tech-tag">Flutter</span>
-                    <span class="tech-tag">Dart</span>
-                    <span class="tech-tag">Firebase</span>
-                    <span class="tech-tag">Cloud Firestore</span>
-                    <span class="tech-tag">Firebase Auth</span>
-                    <span class="tech-tag">fl_chart</span>
-                </div>
-                
-                
-                
-                <div class="project-detail-actions">
-                    <a href="https://www.rustore.ru/catalog/app/com.example.gym_app" class="detail-button primary-button">RuStore</a>
-                </div>
-            </div>
-        `
-    },
-    // <h4>Галерея проекта</h4>
-    //             <div class="project-detail-gallery">
-    //                 <div class="gallery-item">
-    //                     <img src="/api/placeholder/300/600" alt="Скриншот тренировки">
-    //                 </div>
-    //                 <div class="gallery-item">
-    //                     <img src="/api/placeholder/300/600" alt="Скриншот прогресса">
-    //                 </div>
-    //                 <div class="gallery-item">
-    //                     <img src="/api/placeholder/300/600" alt="Скриншот питания">
-    //                 </div>
-    //             </div>
-    // <a href="https://github.com/ivanyadov/ironbuddy" class="detail-button secondary-button">GitHub</a>
-    project2: {
-        title: "RoomieMatch",
-        fullDescription: `
-            <div class="project-detail-image">
-                <img src="https://res.cloudinary.com/dw6swsfbk/image/upload/v1741344830/icon_axqoth.jpg" alt="RoomieMatch">
-            </div>
-            <div class="project-detail-content">
-                <h4>О проекте</h4>
-                <p>RoomieMatch — это приложение для поиска сожителей и соседей по комнате с умным подбором на основе предпочтений и образа жизни.</p>
-                <p>Приложение представляет собой инновационное решение для студентов и молодых специалистов, которые ищут соседей по комнате или квартире. RoomieMatch анализирует информацию о предпочтениях, привычках и образе жизни пользователей и предлагает наиболее подходящие варианты. В приложении реализована система рейтингов и отзывов, а также встроенный мессенджер для общения.</p>
-                
-                
-                <h4>Использованные технологии</h4>
-                <div class="project-detail-tech">
-                    <span class="tech-tag">Flutter</span>
-                    <span class="tech-tag">Dart</span>
-                    <span class="tech-tag">Firebase</span>
-                    <span class="tech-tag">Cloud Firestore</span>
-                    <span class="tech-tag">Firebase Auth</span>
-                    <span class="tech-tag">Cloudinary API</span>
-                    <span class="tech-tag">Cloud Functions</span>
-                </div>
-                
-                <div class="project-detail-actions">
-                    <a href="https://t.me/ivanalpier" class="detail-button secondary-button">Demo</a>
-                </div>
-            </div>
-        `
-    },
-    project3: {
-        title: "Bitok",
-        fullDescription: `
-            <div class="project-detail-image">
-                <img src="https://res.cloudinary.com/dw6swsfbk/image/upload/v1741347317/DALL_E_2025-03-07_21.30.25_-_A_minimalist_logo_for_a_cryptocurrency_wallet_app._The_design_should_be_clean_and_modern_featuring_an_abstract_geometric_symbol_that_represents_digit_2_pc7lqt.jpg" alt="Bitok">
-            </div>
-            <div class="project-detail-content">
-                <h4>О проекте</h4>
-                <p>Современный и безопасный криптовалютный кошелек, разработанный для удобного хранения, обмена и управления цифровыми активами. Приложение поддерживает популярные криптовалюты, включая TON, BTC, ETH, USDT и другие, предоставляя пользователям полный контроль над своими средствами.</p>
-                
-                
-                <h4>Использованные технологии</h4>
-                <div class="project-detail-tech">
-                    <span class="tech-tag">Flutter</span>
-                    <span class="tech-tag">Dart</span>
-                    <span class="tech-tag">Supabase</span>
-                    <span class="tech-tag">PostgreSQL</span>
-                    <span class="tech-tag">Supabase Auth</span>
-                    <span class="tech-tag">flutter_secure_storage</span>
-                    <span class="tech-tag">Web3dart</span>
-                    <span class="tech-tag">ton_dart</span>
-                    <span class="tech-tag">bitcoin_flutter</span>
-                    <span class="tech-tag">DEX Integration</span>
-                    <span class="tech-tag">AES-256 Encryption</span>
-                    <span class="tech-tag">Firebase Cloud Messaging</span>
-                    <span class="tech-tag">Sentry</span>
-                    <span class="tech-tag">Mixpanel</span>
-                </div>
-                
-                
-                
-                <div class="project-detail-actions">
-                    <a href="https://t.me/ivanalpier" class="detail-button secondary-button">Новости</a>
-                </div>
-            </div>
-        `
-    },
-};
-            // Открытие модального окна при клике на проект
-            projectCards.forEach(card => {
-                card.addEventListener('click', function(e) {
-                    // Предотвращаем переход по ссылке внутри карточки
-                    if (e.target.tagName === 'A') {
-                        e.preventDefault();
-                    }
-                    
-                    const projectId = this.getAttribute('data-project');
-                    const projectData = projectsData[projectId];
-                    
-                    if (projectData) {
-                        modalTitle.textContent = projectData.title;
-                        modalBody.innerHTML = projectData.fullDescription;
-                        
-                        // Открываем модальное окно
-                        modal.classList.add('active');
-                        document.body.classList.add('modal-open');
-                        
-                        // Анимация появления элементов внутри модального окна
-                        const elements = modalBody.querySelectorAll('h4, p, ul, .project-detail-tech, .project-detail-gallery, .project-detail-actions');
-                        elements.forEach((el, index) => {
-                            el.style.opacity = '0';
-                            el.style.transform = 'translateY(20px)';
-                            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                            el.style.transitionDelay = `${0.1 + (index * 0.1)}s`;
-                            
-                            setTimeout(() => {
-                                el.style.opacity = '1';
-                                el.style.transform = 'translateY(0)';
-                            }, 100);
-                        });
-                    }
-                });
-            });
-            
-            // Закрытие модального окна
-            modalClose.addEventListener('click', () => {
-                closeModal();
-            });
-            
-            // Закрытие при клике на оверлей
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal();
-                }
-            });
-            
-            // Закрытие по нажатию Esc
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal.classList.contains('active')) {
-                    closeModal();
-                }
-            });
-            
-            function closeModal() {
-                modal.classList.remove('active');
-                document.body.classList.remove('modal-open');
-            }
-        });
-    </script>
     
-    <style>
-        /* Индикатор прокрутки */
-        .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #3498db, #8e44ad);
-            width: 0;
-            z-index: 9999;
+    <footer>
+        <p>Интерактивный браузер плей-офф КХЛ 2025</p>
+    </footer>
+
+    <script>
+        // Глобальные переменные для хранения прогресса турнира
+        let rounds = {
+            1: {
+                west: Array(4).fill(null),
+                east: Array(4).fill(null)
+            },
+            2: Array(4).fill(null),
+            3: Array(2).fill(null),
+            4: null
+        };
+        
+        // Функция для создания пустых матчей второго раунда
+        function createEmptyRound2() {
+            const round2Container = document.getElementById('round2-matches');
+            round2Container.innerHTML = '';
+            
+            for (let i = 1; i <= 4; i++) {
+                const matchContainer = document.createElement('div');
+                matchContainer.className = 'match-container';
+                matchContainer.id = `round2-match${i}`;
+                
+                // Добавляем пустые заполнители команд
+                for (let j = 0; j < 2; j++) {
+                    const teamCard = document.createElement('div');
+                    teamCard.className = 'team-card empty';
+                    teamCard.setAttribute('data-round', '2');
+                    teamCard.setAttribute('data-match', i);
+                    
+                    teamCard.innerHTML = `
+                        <div class="team-logo" style="background-image: url('/api/placeholder/60/60')"></div>
+                        <div class="team-info">
+                            <div class="team-name">Ожидание...</div>
+                        </div>
+                        <div class="team-seed">-</div>
+                    `;
+                    
+                    matchContainer.appendChild(teamCard);
+                }
+                
+                round2Container.appendChild(matchContainer);
+            }
         }
-    </style>
-</head>
-<body>
+        
+        // Функция для создания пустых полуфинальных матчей
+        function createEmptySemifinals() {
+            const semifinalContainer = document.getElementById('semifinal-matches');
+            semifinalContainer.innerHTML = '';
+            
+            for (let i = 1; i <= 2; i++) {
+                const matchContainer = document.createElement('div');
+                matchContainer.className = 'match-container';
+                matchContainer.id = `semifinal-match${i}`;
+                
+                // Добавляем пустые заполнители команд
+                for (let j = 0; j < 2; j++) {
+                    const teamCard = document.createElement('div');
+                    teamCard.className = 'team-card empty';
+                    teamCard.setAttribute('data-round', '3');
+                    teamCard.setAttribute('data-match', i);
+                    
+                    teamCard.innerHTML = `
+                        <div class="team-logo" style="background-image: url('/api/placeholder/60/60')"></div>
+                        <div class="team-info">
+                            <div class="team-name">Ожидание...</div>
+                        </div>
+                        <div class="team-seed">-</div>
+                    `;
+                    
+                    matchContainer.appendChild(teamCard);
+                }
+                
+                semifinalContainer.appendChild(matchContainer);
+            }
+        }
+        
+        // Функция для создания пустого финального матча
+        function createEmptyFinal() {
+            const finalContainer = document.getElementById('final-match');
+            finalContainer.innerHTML = '';
+            
+            const matchContainer = document.createElement('div');
+            matchContainer.className = 'match-container';
+            matchContainer.id = 'final-match';
+            
+            // Добавляем пустые заполнители команд
+            for (let j = 0; j < 2; j++) {
+                const teamCard = document.createElement('div');
+                teamCard.className = 'team-card empty';
+                teamCard.setAttribute('data-round', '4');
+                teamCard.setAttribute('data-match', '1');
+                
+                teamCard.innerHTML = `
+                    <div class="team-logo" style="background-image: url('/api/placeholder/60/60')"></div>
+                    <div class="team-info">
+                        <div class="team-name">Ожидание...</div>
+                    </div>
+                    <div class="team-seed">-</div>
+                `;
+                
+                matchContainer.appendChild(teamCard);
+            }
+            
+            finalContainer.appendChild(matchContainer);
+        }
+        
+        // Функция для отрисовки соединительных линий
+        function drawConnectors() {
+            const container = document.getElementById('connectors');
+            container.innerHTML = '';
+            
+            // Если окно слишком узкое, не рисуем соединители
+            if (window.innerWidth < 1400) {
+                return;
+            }
+            
+            const rounds = document.querySelectorAll('.round');
+            
+            // Соединяем матчи первого и второго раунда
+            if (rounds.length >= 2) {
+                drawRoundConnectors(rounds[0], rounds[1], 8, 4);
+            }
+            
+            // Соединяем матчи второго раунда и полуфинала
+            if (rounds.length >= 3) {
+                drawRoundConnectors(rounds[1], rounds[2], 4, 2);
+            }
+            
+            // Соединяем матчи полуфинала и финала
+            if (rounds.length >= 4) {
+                drawRoundConnectors(rounds[2], rounds[3], 2, 1);
+            }
+            
+            // Добавляем центральную вертикальную линию для финала
+            if (rounds.length >= 4) {
+                const finalMatch = rounds[3].querySelector('.match-container');
+                const finalRect = finalMatch.getBoundingClientRect();
+                const containerRect = document.getElementById('bracket-container').getBoundingClientRect();
+                const finalMidY = finalRect.top + finalRect.height / 2 - containerRect.top;
+                
+                // Центральная вертикальная линия
+                const centralVConnector = document.createElement('div');
+                centralVConnector.className = 'connector vertical-connector';
+                centralVConnector.style.top = `${finalMidY - 40}px`; // Высота над матчем
+                centralVConnector.style.left = `${finalRect.right - containerRect.left + 30}px`;
+                centralVConnector.style.height = `80px`; // Высота линии
+                container.appendChild(centralVConnector);
+                
+                // Горизонтальная линия к трофею
+                const trophyHConnector = document.createElement('div');
+                trophyHConnector.className = 'connector horizontal-connector';
+                trophyHConnector.style.top = `${finalMidY - 40}px`;
+                trophyHConnector.style.left = `${finalRect.right - containerRect.left + 30}px`;
+                trophyHConnector.style.width = `40px`;
+                container.appendChild(trophyHConnector);
+            }
+        }
+        
+        // Функция для рисования соединителей между раундами
+        function drawRoundConnectors(fromRound, toRound, fromMatches, toMatches) {
+            const fromRect = fromRound.getBoundingClientRect();
+            const toRect = toRound.getBoundingClientRect();
+            const containerRect = document.getElementById('bracket-container').getBoundingClientRect();
+            
+            const fromMatchContainers = fromRound.querySelectorAll('.match-container');
+            const toMatchContainers = toRound.querySelectorAll('.match-container');
+            
+            // Группируем матчи для создания соединителей
+            for (let i = 0; i < toMatches; i++) {
+                const toMatch = toMatchContainers[i];
+                const toRect = toMatch.getBoundingClientRect();
+                const toMidY = toRect.top + toRect.height / 2 - containerRect.top;
+                
+                // Каждый матч следующего раунда соединяется с двумя матчами предыдущего
+                const startIdx = i * (fromMatches / toMatches);
+                const endIdx = startIdx + (fromMatches / toMatches) - 1;
+                
+                for (let j = startIdx; j <= endIdx; j++) {
+                    const fromMatch = fromMatchContainers[j];
+                    const fromRect = fromMatch.getBoundingClientRect();
+                    const fromMidY = fromRect.top + fromRect.height / 2 - containerRect.top;
+                    
+                    // Горизонтальная линия от матча первого раунда
+                    const hConnector1 = document.createElement('div');
+                    hConnector1.className = 'connector horizontal-connector';
+                    hConnector1.style.top = `${fromMidY}px`;
+                    hConnector1.style.left = `${fromRect.right - containerRect.left}px`;
+                    hConnector1.style.width = `${(toRect.left - fromRect.right) / 2}px`;
+                    container.appendChild(hConnector1);
+                    
+                    // Вертикальная линия соединяющая матчи
+                    const vConnector = document.createElement('div');
+                    vConnector.className = 'connector vertical-connector';
+                    const vTop = Math.min(fromMidY, toMidY);
+                    const vHeight = Math.abs(fromMidY - toMidY);
+                    vConnector.style.top = `${vTop}px`;
+                    vConnector.style.left = `${fromRect.right - containerRect.left + (toRect.left - fromRect.right) / 2}px`;
+                    vConnector.style.height = `${vHeight}px`;
+                    container.appendChild(vConnector);
+                    
+                    // Горизонтальная линия к матчу следующего раунда
+                    const hConnector2 = document.createElement('div');
+                    hConnector2.className = 'connector horizontal-connector';
+                    hConnector2.style.top = `${toMidY}px`;
+                    hConnector2.style.left = `${fromRect.right - containerRect.left + (toRect.left - fromRect.right) / 2}px`;
+                    hConnector2.style.width = `${(toRect.left - fromRect.right) / 2}px`;
+                    container.appendChild(hConnector2);
+                }
+            }
+        }
+        
+        // Функция выбора победителя
+        function selectWinner(element) {
+            // Если элемент уже пустой (placeholder), то ничего не делаем
+            if (element.classList.contains('empty')) {
+                return;
+            }
+            
+            const parent = element.parentNode;
+            const teamCards = parent.querySelectorAll('.team-card');
+            
+            // Убираем класс selected у всех команд в матче
+            teamCards.forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Добавляем класс selected выбранной команде
+            element.classList.add('selected');
+            
+            // Получаем информацию о команде
+            const teamName = element.querySelector('.team-name').textContent;
+            const teamSeed = parseInt(element.getAttribute('data-seed'));
+            const teamConference = element.getAttribute('data-conference');
+            
+            // Получаем правильный URL логотипа из стиля элемента
+            const teamLogoDiv = element.querySelector('.team-logo');
+            const computedStyle = window.getComputedStyle(teamLogoDiv);
+            const backgroundImage = computedStyle.backgroundImage;
+            const teamLogo = backgroundImage.replace(/url\(['"](.+)['"]\)/, '$1');
+            
+            const teamData = {
+                name: teamName,
+                seed: teamSeed,
+                conference: teamConference,
+                logo: teamLogo
+            };
+            
+            // Определяем, к какому раунду относится матч
+            if (parent.id.startsWith('west-match') || parent.id.startsWith('east-match')) {
+                // Первый раунд
+                const conference = teamConference;
+                const matchIndex = parseInt(parent.id.split('match')[1]) - 1;
+                
+                // Сохраняем победителя
+                rounds[1][conference][matchIndex] = teamData;
+                
+                // Переходим к формированию второго раунда
+                updateRound2();
+            } else {
+                // Другие раунды
+                const roundId = element.closest('.round').id;
+                let roundNum = 0;
+                
+                if (roundId === 'round2') roundNum = 2;
+                else if (roundId === 'semifinal') roundNum = 3;
+                else if (roundId === 'final') roundNum = 4;
+                
+                const matchId = parent.id;
+                const matchIndex = parseInt(matchId.split('-match')[1]) - 1;
+                
+                // Сохраняем победителя
+                if (roundNum === 2) {
+                    rounds[2][matchIndex] = teamData;
+                    updateRound3();
+                } else if (roundNum === 3) {
+                    rounds[3][matchIndex] = teamData;
+                    updateFinal();
+                } else if (roundNum === 4) {
+                    rounds[4] = teamData;
+                    showChampion();
+                }
+            }
+            
+            // Перерисовываем соединительные линии
+            setTimeout(drawConnectors, 100);
+        }
+        
+        // Функция обновления второго раунда
+        function updateRound2() {
+            // Проверяем, достаточно ли победителей первого раунда
+            const westWinners = rounds[1].west.filter(Boolean);
+            const eastWinners = rounds[1].east.filter(Boolean);
+            
+            // Если победители определены не во всех матчах, выходим
+            if (westWinners.length < 4 || eastWinners.length < 4) {
+                return;
+            }
+            
+            // Сортируем победителей по посеву
+            const sortedWestWinners = [...westWinners].sort((a, b) => a.seed - b.seed);
+            const sortedEastWinners = [...eastWinners].sort((a, b) => a.seed - b.seed);
+            
+            // Второй раунд: команды играют с противоположной конференцией
+            // Высший посев запада играет с низшим посевом востока и т.д.
+            const match1 = [sortedWestWinners[0], sortedEastWinners[3]]; // Запад #1 vs Восток #4
+            const match2 = [sortedWestWinners[1], sortedEastWinners[2]]; // Запад #2 vs Восток #3
+            const match3 = [sortedEastWinners[0], sortedWestWinners[3]]; // Восток #1 vs Запад #4
+            const match4 = [sortedEastWinners[1], sortedWestWinners[2]]; // Восток #2 vs Запад #3
+            
+            // Создаем контейнеры для второго раунда, если их еще нет
+            if (!document.getElementById('round2-match1')) {
+                createEmptyRound2();
+            }
+            
+            // Обновляем интерфейс
+            updateMatchCards('round2-match1', match1);
+            updateMatchCards('round2-match2', match2);
+            updateMatchCards('round2-match3', match3);
+            updateMatchCards('round2-match4', match4);
+        }
+        
+        // Функция обновления третьего раунда (полуфинал)
+        function updateRound3() {
+            // Проверяем, достаточно ли победителей второго раунда
+            const round2Winners = rounds[2].filter(Boolean);
+            
+            // Если победители определены не во всех матчах, выходим
+            if (round2Winners.length < 4) {
+                return;
+            }
+            
+            // В полуфинале победители первых двух матчей играют друг с другом,
+            // а победители третьего и четвёртого матчей - между собой
+            const match1 = [round2Winners[0], round2Winners[1]];
+            const match2 = [round2Winners[2], round2Winners[3]];
+            
+            // Создаем контейнеры для полуфиналов, если их еще нет
+            if (!document.getElementById('semifinal-match1')) {
+                createEmptySemifinals();
+            }
+            
+            // Обновляем интерфейс
+            updateMatchCards('semifinal-match1', match1);
+            updateMatchCards('semifinal-match2', match2);
+        }
+        
+        // Функция обновления финала
+        function updateFinal() {
+            // Проверяем, достаточно ли победителей полуфинала
+            const round3Winners = rounds[3].filter(Boolean);
+            
+            // Если победители определены не во всех матчах, выходим
+            if (round3Winners.length < 2) {
+                return;
+            }
+            
+            // В финале встречаются победители полуфиналов
+            const match = [round3Winners[0], round3Winners[1]];
+            
+            // Создаем контейнер для финала, если его еще нет
+            if (!document.getElementById('final-match').querySelector('.match-container')) {
+                createEmptyFinal();
+            }
+            
+            // Обновляем интерфейс
+            updateMatchCards('final-match', match);
+        }
+        
+        // Функция отображения чемпиона
+        function showChampion() {
+            if (!rounds[4]) {
+                return;
+            }
+            
+            document.getElementById('champion-container').classList.add('show');
+            document.getElementById('champion-name').textContent = rounds[4].name;
+            document.getElementById('champion-logo').style.backgroundImage = `url('${rounds[4].logo}')`;
+        }
+        
+        // Функция обновления карточек матча
+        function updateMatchCards(matchId, teams) {
+            const matchElement = document.getElementById(matchId);
+            const teamCards = matchElement.querySelectorAll('.team-card');
+            
+            // Обновляем информацию о командах
+            for (let i = 0; i < teamCards.length; i++) {
+                const team = teams[i];
+                
+                // Обновляем текстовую информацию
+                teamCards[i].querySelector('.team-name').textContent = team.name;
+                teamCards[i].querySelector('.team-seed').textContent = team.seed;
+                
+                // Обновляем логотип правильным способом
+                teamCards[i].querySelector('.team-logo').style.backgroundImage = `url('${team.logo}')`;
+                
+                // Обновляем data-атрибуты
+                teamCards[i].setAttribute('data-team', team.name);
+                teamCards[i].setAttribute('data-seed', team.seed);
+                teamCards[i].setAttribute('data-conference', team.conference);
+                teamCards[i].setAttribute('data-logo', team.logo);
+                
+                // Обновляем классы и обработчики
+                teamCards[i].classList.remove('empty');
+                teamCards[i].classList.remove('selected');
+                teamCards[i].setAttribute('onclick', 'selectWinner(this)');
+            }
+        }
+        
+        // Функция сброса турнирной сетки
+        function resetBracket() {
+            // Сбрасываем данные
+            rounds = {
+                1: {
+                    west: Array(4).fill(null),
+                    east: Array(4).fill(null)
+                },
+                2: Array(4).fill(null),
+                3: Array(2).fill(null),
+                4: null
+            };
+            
+            // Сбрасываем выделения в первом раунде
+            const firstRoundCards = document.querySelectorAll('#round1 .team-card');
+            firstRoundCards.forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Очищаем и заново создаем раунды
+            createEmptyRound2();
+            createEmptySemifinals();
+            createEmptyFinal();
+            
+            // Скрываем чемпиона
+            document.getElementById('champion-container').classList.remove('show');
+            
+            // Перерисовываем линии
+            drawConnectors();
+        }
+        
+        // Инициализация при загрузке страницы
+        window.onload = function() {
+            // Создаем пустые раунды
+            createEmptyRound2();
+            createEmptySemifinals();
+            createEmptyFinal();
+            
+            // Рисуем соединительные линии
+            drawConnectors();
+        };
+        
+        // Перерисовка линий при изменении размера окна
+        window.addEventListener('resize', drawConnectors);
+    </script>
 </body>
 </html>
